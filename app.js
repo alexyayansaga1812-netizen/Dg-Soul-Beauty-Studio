@@ -48,9 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------
-    // 2. Services Tabs — Toggle / Accordion Behavior
+    // 2. Services Tabs — Exclusive (one open at a time)
     // --------------------------------------------------
     const tabBtns = document.querySelectorAll('.tab-btn');
+    const serviceGrids = document.querySelectorAll('.services-grid');
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -60,12 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const isAlreadyOpen = btn.classList.contains('active');
 
-            if (isAlreadyOpen) {
-                // Collapse
-                btn.classList.remove('active');
-                matchingGrid.classList.remove('active');
-            } else {
-                // Expand
+            // Close all tabs first
+            tabBtns.forEach(b => b.classList.remove('active'));
+            serviceGrids.forEach(g => g.classList.remove('active'));
+
+            if (!isAlreadyOpen) {
+                // Open the clicked one
                 btn.classList.add('active');
                 matchingGrid.classList.add('active');
             }
