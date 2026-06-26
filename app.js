@@ -48,27 +48,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------
-    // 2. Services Tabs Switcher (Uñas vs Cabello)
+    // 2. Services Tabs — Toggle / Accordion Behavior
     // --------------------------------------------------
     const tabBtns = document.querySelectorAll('.tab-btn');
-    const serviceGrids = document.querySelectorAll('.services-grid');
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const targetCategory = btn.getAttribute('data-tab');
-
-            // Remove active class from buttons and grids
-            tabBtns.forEach(b => b.classList.remove('active'));
-            serviceGrids.forEach(grid => grid.classList.remove('active'));
-
-            // Add active class to clicked button and matched grid
-            btn.classList.add('active');
             const matchingGrid = document.getElementById(`${targetCategory}-services`);
-            if (matchingGrid) {
+            if (!matchingGrid) return;
+
+            const isAlreadyOpen = btn.classList.contains('active');
+
+            if (isAlreadyOpen) {
+                // Collapse
+                btn.classList.remove('active');
+                matchingGrid.classList.remove('active');
+            } else {
+                // Expand
+                btn.classList.add('active');
                 matchingGrid.classList.add('active');
             }
         });
     });
+
 
     // --------------------------------------------------
     // 3. Interactive Budget Calculator & Reservation Form
